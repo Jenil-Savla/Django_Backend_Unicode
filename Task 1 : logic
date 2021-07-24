@@ -1,0 +1,26 @@
+print("Task 1 : Logic !!")
+try:
+	n = int(input("Enter the number of words : "))
+	wordlist = []    #create list for words
+	countlist = []   #create list for occurence
+	for i in range(n):  #adding the words in list
+		wordlist.append(input(f" Word {i+1} : "))   
+
+	
+	while(len(wordlist) != 0):
+		count = 0   #initializing count
+		count = wordlist.count(wordlist[0])  #Counting the occurence of word at index 0
+		countlist.append(count)  #inserting the count in countlist
+		Templist = []  #Creating a temporary list to modify original list
+		for word in wordlist:  #removing all the words already counted including index 0
+			if word != wordlist[0]:
+				Templist.append(word)
+		wordlist = Templist   #Modifying original list
+		
+	print(f"Number of unique words = {len(countlist)} \nThe number of occurences of each distinct words are :")
+	for element in countlist:
+		print(element, end = ",")
+	
+			
+except :    #error handling 
+	print("Please Try again")
