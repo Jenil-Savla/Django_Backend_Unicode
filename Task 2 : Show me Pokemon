@@ -1,0 +1,15 @@
+#django view
+from django.http import HttpResponse
+import requests
+import json
+
+def index(request):
+	x = requests.get('https://pokeapi.co/api/v2/type/') #fetching all the type data from site
+	pytext = json.loads(x.text) #parsing data into python 
+	response = HttpResponse() #creating a response object
+	response.write("<b>The pokemon types are : </b><ol>")
+	for i in range(18): #Iterating data for each type
+		a = pytext['results'][i]['name'] #filtering only the name of type from all data
+		response.write(f"<li> {a}</li>")
+	response.write("</ol>")
+	return response  #returning the response object
