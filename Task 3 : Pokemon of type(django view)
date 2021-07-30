@@ -1,0 +1,18 @@
+from django.http import HttpResponse
+from django.shortcuts import render
+import requests
+import json
+
+def show(request):
+	return render(request,'myproject.html') #using the template for HTML form
+
+def form(request):
+	typename = request.GET.get('text','default')
+	rawdata = requests.get(f'https://pokeapi.co/api/v2/type/{typename}')
+	pydata = json.loads(rawdata.text)
+	response = HttpResponse()
+	response.write("<b>The pokemon of this type are : </b><ul>")
+	for i in range(len(pydata['pokemon'])):
+		response.write(f"<li>{pydata['pokemon'][i]['pokemon']['name']}</li>")
+	response.write("</ul>")
+	return response
