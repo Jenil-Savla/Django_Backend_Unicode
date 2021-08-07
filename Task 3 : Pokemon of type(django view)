@@ -4,15 +4,15 @@ import requests
 import json
 
 def show(request):
-	return render(request,'myproject.html') #using the template for HTML form
+	return render(request,'myproject.html')
 
 def form(request):
-	typename = request.GET.get('text','default')
+	typename = request.GET.get('text','default').lower()
 	rawdata = requests.get(f'https://pokeapi.co/api/v2/type/{typename}')
 	pydata = json.loads(rawdata.text)
 	response = HttpResponse()
 	response.write("<b>The pokemon of this type are : </b><ul>")
 	for i in range(len(pydata['pokemon'])):
-		response.write(f"<li>{pydata['pokemon'][i]['pokemon']['name']}</li>")
+		response.write(f"<li><a href = {pydata['pokemon'][i]['pokemon']['url']}>{pydata['pokemon'][i]['pokemon']['name']}</a></li>")
 	response.write("</ul>")
 	return response
